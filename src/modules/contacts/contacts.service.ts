@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
-
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common'
+import { CreateContactDto } from './dto/create-contact.dto'
+import { UpdateContactDto } from './dto/update-contact.dto'
+import { ContactsRepository } from './repositories/contacts.repositories'
 @Injectable()
 export class ContactsService {
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
+  constructor(private ContactsRepository: ContactsRepository) {}
+  async create(createContactDto: CreateContactDto) {
+    // const findContact = await this.ContactsRepository.findByEmail(createContactDto.email)
+    // if (findContact) {
+    //   throw new ConflictException('Contact already exists')
+    // }
+
+    const contact = await this.ContactsRepository.create(createContactDto)
+
+    return contact
   }
 
-  findAll() {
-    return `This action returns all contacts`;
+  async findAll() {
+    const contacts = await this.ContactsRepository.findAll()
+    return contacts
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contact`;
+  async findOne(id: string) {
+    const contact = await this.ContactsRepository.findOne(id)
+    if (!contact) {
+      throw new NotFoundException('Contact not found.')
+    }
+    return contact
   }
 
-  update(id: number, updateContactDto: UpdateContactDto) {
-    return `This action updates a #${id} contact`;
+  async update(id: string, updateContactDto: UpdateContactDto) {
+    const contact = await this.ContactsRepository.findOne(id)
+    if (!contact) {
+      throw new NotFoundException('Contact not found.')
+    }
+
+    const updateContact = await this.ContactsRepository.update(
+      id,
+      updateContactDto,
+    )
+    return updateContact
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contact`;
+  async remove(id: string) {
+    const contact = await this.ContactsRepository.findOne(id)
+    if (!contact) {
+      throw new NotFoundException('Contact not found.')
+    }
+
+    await this.ContactsRepository.delete(id)
+    return
   }
 }

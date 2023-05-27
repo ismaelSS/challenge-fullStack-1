@@ -5,6 +5,7 @@ export class Contact {
   name: string
   email: string
   phone_number: string
+  userId: string
 
   constructor() {
     this.id = randomUUID()

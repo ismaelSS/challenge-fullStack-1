@@ -23,12 +23,7 @@ export class ContactsPrismaRepository implements ContactsRepository {
   }
   async findAll(): Promise<Contact[]> {
     const contacts = await this.prisma.contact.findMany()
-    return contacts.map(({ id, name, email, phone_number }) => ({
-      id,
-      name,
-      email,
-      phone_number,
-    }))
+    return plainToInstance(Contact, contacts)
   }
 
   async findOne(id: string): Promise<Contact> {
@@ -37,12 +32,12 @@ export class ContactsPrismaRepository implements ContactsRepository {
     })
     return plainToInstance(Contact, contact)
   }
-  async findByEmail(email: string): Promise<Contact> {
-    const contact = await this.prisma.contact.findUnique({
-      where: { email },
-    })
-    return plainToInstance(Contact, contact)
-  }
+  // async findByEmail(email: string): Promise<Contact> {
+  //   const contact = await this.prisma.contact.findUnique({
+  //     where: { email },
+  //   })
+  //   return plainToInstance(Contact, contact)
+  // }
   async update(id: string, data: UpdateContactDto): Promise<Contact> {
     const contact = await this.prisma.contact.update({
       where: { id },

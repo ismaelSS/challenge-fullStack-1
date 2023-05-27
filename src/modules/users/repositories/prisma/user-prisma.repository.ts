@@ -23,12 +23,13 @@ export class UsersPrismaRepository implements UsersRepository {
   }
   async findAll(): Promise<User[]> {
     const users = await this.prisma.user.findMany()
-    return users.map(({ id, name, email, phone_number }) => ({
-      id,
-      name,
-      email,
-      phone_number,
-    }))
+    return plainToInstance(User, users)
+    // return users.map(({ id, name, email, phone_number }) => ({
+    //   id,
+    //   name,
+    //   email,
+    //   phone_number,
+    // }))
   }
 
   async findOne(id: string): Promise<User> {

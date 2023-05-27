@@ -6,7 +6,7 @@ export abstract class ContactsRepository {
   abstract create(data: CreateContactDto): Promise<Contact> | Contact
   abstract findAll(): Promise<Contact[]> | Contact[]
   abstract findOne(id: string): Promise<Contact> | Contact
-  abstract findByEmail(email: string): Promise<Contact> | Contact
+  // abstract findByEmail(email: string): Promise<Contact> | Contact
   abstract update(
     id: string,
     data: UpdateContactDto,
