@@ -15,9 +15,13 @@ export class CreateUserDto {
   @IsString()
   name: string
 
-  @IsNotEmpty()
   @IsEmail()
+  @IsNotEmpty()
   email: string
+
+  @IsNotEmpty()
+  @IsString()
+  phone_number: string
 
   @IsString()
   @MinLength(8, {
