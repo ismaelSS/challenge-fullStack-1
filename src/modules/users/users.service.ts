@@ -9,48 +9,53 @@ import { UsersRepository } from './repositories/user.repositories'
 
 @Injectable()
 export class UsersService {
-  constructor(private UsersRepository: UsersRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
   async create(createUserDto: CreateUserDto) {
-    const findUser = await this.UsersRepository.findByEmail(createUserDto.email)
+    const findUser = await this.usersRepository.findByEmail(createUserDto.email)
     if (findUser) {
       throw new ConflictException('User already exists')
     }
 
-    const user = await this.UsersRepository.create(createUserDto)
+    const user = await this.usersRepository.create(createUserDto)
 
     return user
   }
 
   async findAll() {
-    const users = await this.UsersRepository.findAll()
+    const users = await this.usersRepository.findAll()
     return users
   }
 
   async findOne(id: string) {
-    const user = await this.UsersRepository.findOne(id)
+    const user = await this.usersRepository.findOne(id)
     if (!user) {
       throw new NotFoundException('User not found.')
     }
     return user
   }
 
+  async findByEmail(email: string) {
+    const user = await this.usersRepository.findByEmail(email)
+    return user
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.UsersRepository.findOne(id)
+    const user = await this.usersRepository.findOne(id)
     if (!user) {
       throw new NotFoundException('User not found.')
     }
 
-    const updateUser = await this.UsersRepository.update(id, updateUserDto)
+    const updateUser = await this.usersRepository.update(id, updateUserDto)
     return updateUser
   }
 
   async remove(id: string) {
-    const user = await this.UsersRepository.findOne(id)
+    const user = await this.usersRepository.findOne(id)
     if (!user) {
       throw new NotFoundException('User not found.')
     }
 
-    await this.UsersRepository.delete(id)
+    await this.usersRepository.delete(id)
     return
   }
 }
