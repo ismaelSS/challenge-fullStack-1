@@ -9,20 +9,41 @@ import {
   // validate,
   // ValidationError,
 } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateUserDto {
+  @ApiProperty({
+    description: 'Nome do usuário',
+    type: String,
+    default: 'usuario da Silva',
+  })
   @IsNotEmpty()
   @IsString()
   name: string
 
+  @ApiProperty({
+    description: 'email do usuário',
+    type: String,
+    default: 'usuaria@mail.com',
+  })
   @IsEmail()
   @IsNotEmpty()
   email: string
 
+  @ApiProperty({
+    description: 'telefone do usuário',
+    type: String,
+    default: '11123456789',
+  })
   @IsNotEmpty()
   @IsString()
   phone_number: string
 
+  @ApiProperty({
+    description: 'senha do usuário',
+    type: String,
+    default: 'Uusuari0!',
+  })
   @IsString()
   @MinLength(8, {
     message: 'The password must be at least 8 characters long.',
