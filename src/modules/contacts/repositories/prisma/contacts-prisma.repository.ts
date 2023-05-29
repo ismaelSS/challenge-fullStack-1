@@ -36,6 +36,7 @@ export class ContactsPrismaRepository implements ContactsRepository {
         name: true,
         email: true,
         phone_number: true,
+        created_at: true,
       },
     })
     return plainToInstance(Contact, contacts)
@@ -49,6 +50,7 @@ export class ContactsPrismaRepository implements ContactsRepository {
         name: true,
         email: true,
         phone_number: true,
+        created_at: true,
       },
     })
     return plainToInstance(Contact, contact)
