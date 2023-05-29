@@ -9,7 +9,7 @@ export abstract class ContactsRepository {
   ): Promise<Contact> | Contact
   abstract findAll(): Promise<Contact[]> | Contact[]
   abstract findOne(id: string): Promise<Contact> | Contact
-  // abstract findByEmail(email: string): Promise<Contact> | Contact
+  abstract findAllUserContacts(userId: string): Promise<Contact[]> | Contact[]
   abstract update(
     id: string,
     data: UpdateContactDto,

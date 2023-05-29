@@ -23,6 +23,11 @@ export class ContactsService {
     return contacts
   }
 
+  async findAllUserContacts(userId: string) {
+    const contacts = await this.ContactsRepository.findAllUserContacts(userId)
+    return contacts
+  }
+
   async findOne(id: string) {
     const contact = await this.ContactsRepository.findOne(id)
     if (!contact) {

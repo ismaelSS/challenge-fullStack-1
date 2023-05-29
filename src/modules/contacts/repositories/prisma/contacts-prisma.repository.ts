@@ -19,6 +19,8 @@ export class ContactsPrismaRepository implements ContactsRepository {
       data: { ...contact, userId },
     })
 
+    delete newContact.userId
+
     return plainToInstance(Contact, newContact)
   }
   async findAll(): Promise<Contact[]> {
@@ -26,9 +28,28 @@ export class ContactsPrismaRepository implements ContactsRepository {
     return plainToInstance(Contact, contacts)
   }
 
+  async findAllUserContacts(userId: string): Promise<Contact[]> {
+    const contacts = await this.prisma.contact.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone_number: true,
+      },
+    })
+    return plainToInstance(Contact, contacts)
+  }
+
   async findOne(id: string): Promise<Contact> {
     const contact = await this.prisma.contact.findUnique({
       where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone_number: true,
+      },
     })
     return plainToInstance(Contact, contact)
   }
