@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { CreateContactDto } from './dto/create-contact.dto'
 import { UpdateContactDto } from './dto/update-contact.dto'
-import { ContactsRepository } from './repositories/contacts.repositories'
+import { ContactsRepository} from './repositories/contacts.repositories'
 @Injectable()
 export class ContactsService {
   constructor(private ContactsRepository: ContactsRepository) {}
